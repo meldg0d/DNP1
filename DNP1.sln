@@ -1,8 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lecture1", "Lecture1", "{ADE9320B-777B-488F-A8E6-61576BB991CE}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{ADE9320B-777B-488F-A8E6-61576BB991CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GithubTest", "GithubTest\GithubTest.csproj", "{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryContracts", "RepositoryContracts\RepositoryContracts.csproj", "{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{87D836CA-F535-4985-BC26-F3A6B2639BD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{52D5DBC7-75B8-441C-B4D4-B74296F0F432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{B9A1F83B-F779-4012-99EB-D69CB913EC3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InMemoryRepositories", "InMemoryRepositories\InMemoryRepositories.csproj", "{761B5099-8355-4148-B61D-91EFA3C830EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,11 +19,26 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
+		{52D5DBC7-75B8-441C-B4D4-B74296F0F432} = {87D836CA-F535-4985-BC26-F3A6B2639BD2}
+		{B9A1F83B-F779-4012-99EB-D69CB913EC3E} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
+		{761B5099-8355-4148-B61D-91EFA3C830EC} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B35E4CB-492C-49C4-8C1D-4E28115F7BAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D5DBC7-75B8-441C-B4D4-B74296F0F432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D5DBC7-75B8-441C-B4D4-B74296F0F432}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D5DBC7-75B8-441C-B4D4-B74296F0F432}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D5DBC7-75B8-441C-B4D4-B74296F0F432}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9A1F83B-F779-4012-99EB-D69CB913EC3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9A1F83B-F779-4012-99EB-D69CB913EC3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9A1F83B-F779-4012-99EB-D69CB913EC3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9A1F83B-F779-4012-99EB-D69CB913EC3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{761B5099-8355-4148-B61D-91EFA3C830EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{761B5099-8355-4148-B61D-91EFA3C830EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{761B5099-8355-4148-B61D-91EFA3C830EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{761B5099-8355-4148-B61D-91EFA3C830EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
