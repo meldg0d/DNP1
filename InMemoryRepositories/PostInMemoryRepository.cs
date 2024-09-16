@@ -4,9 +4,9 @@ using GithubTest;
 namespace InMemoryRepositories;
 
 
-public class PostInMemoryRepository
+public class PostInMemoryRepository : IPostRepository
 {
-    private List<Post> posts = new List<Post>();
+    private readonly List<Post> posts = new List<Post>();
     
     public Task<Post> AddAsync(Post post)
     {
@@ -31,7 +31,12 @@ public class PostInMemoryRepository
 
         return Task.CompletedTask;
     }
-    
+
+    public Task DeleteAsync(Post post)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task DeleteAsync(int id)
     {
         Post? postToRemove = posts.SingleOrDefault(p => p.Id == id);
@@ -55,7 +60,12 @@ public class PostInMemoryRepository
         // Do implementation
         return Task.FromResult(postToGet);
     }
-    
+
+    public IQueryable<Post> GetAll()
+    {
+        throw new NotImplementedException();
+    }
+
     public IQueryable<Post> GetManyAsync()
     {
         return posts.AsQueryable();
