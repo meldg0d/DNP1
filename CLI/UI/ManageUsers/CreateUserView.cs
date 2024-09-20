@@ -32,6 +32,7 @@ public class CreateUserView
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("An error occurred while adding the user: " + e.Message);
             Console.ResetColor();
+            Console.ReadKey();
         }
        
         

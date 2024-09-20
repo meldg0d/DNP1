@@ -77,6 +77,7 @@ public class DeleteUsersView
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nInvalid choice, please try again.");
                 Console.ResetColor();
+                Console.ReadKey();
                 break;
             
         }
