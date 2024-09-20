@@ -30,23 +30,22 @@ public class ManageUsersView
             //Create new Users
             case "1":
                 CreateUserView createUserView = new CreateUserView();
-                createUserView.Show(userInMemoryRepository);
+                await createUserView.Show(userInMemoryRepository);
                 break;
             //List all users
             case "2":
-                ListUsersView listUserView = new ListUsersView();
-                listUserView.Show(userInMemoryRepository);
-
+               ListUsersView listUsersView = new ListUsersView();
+               await listUsersView.Show(userInMemoryRepository);
                 break;
             //Delete users
             case "3":
                 DeleteUsersView deleteUsersView = new DeleteUsersView();
-                deleteUsersView.Show(userInMemoryRepository);
+                await deleteUsersView.Show(userInMemoryRepository);
                 break;
 
             case "4":
                 EditUsersView editUsersView = new EditUsersView();
-                editUsersView.Show(userInMemoryRepository);
+                await editUsersView.Show(userInMemoryRepository);
                 break;
             
             case "5":
@@ -56,6 +55,7 @@ public class ManageUsersView
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("\nInvalid choice, please try again.");
                 Console.ResetColor();
+                Console.ReadKey();
                 break;
         }
     }

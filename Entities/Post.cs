@@ -14,4 +14,12 @@ public class Post
         Body = body;
         UserId = userId;
     }
+    
+    public Post( string title, string body, int userId)
+    { 
+        Id = new Random().Next();
+        Title = title;
+        Body = body;
+        UserId = userId;
+    }
 }

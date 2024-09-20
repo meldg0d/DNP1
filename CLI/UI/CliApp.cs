@@ -62,7 +62,7 @@ public class CliApp
                 //ManagePosts
                 case "1":
                      ManagePostsView postView = new ManagePostsView();
-                     postView.Show();
+                     postView.Show(_postRepository, _userRepository);
                     break;
                 //ManageUsers
                 case "2":

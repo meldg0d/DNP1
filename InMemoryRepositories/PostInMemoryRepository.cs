@@ -63,8 +63,10 @@ public class PostInMemoryRepository : IPostRepository
 
     public IQueryable<Post> GetAll()
     {
-        throw new NotImplementedException();
+        return posts.AsQueryable();
+        
     }
+    
 
     public IQueryable<Post> GetManyAsync()
     {
