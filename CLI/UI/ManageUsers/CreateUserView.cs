@@ -5,11 +5,11 @@ namespace CLI.UI.ManageUsers;
 
 public class CreateUserView
 {
-    public void Show(IUserRepository userInMemoryRepository)
+    public async Task Show(IUserRepository userInMemoryRepository)
     {
         Console.Clear();
         Console.WriteLine("Username:");
-        var username = Console.ReadLine();
+        var username = Console.ReadLine().ToLower();
         
         Console.WriteLine("Password:");
         var password = Console.ReadLine();

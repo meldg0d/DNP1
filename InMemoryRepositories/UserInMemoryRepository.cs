@@ -17,6 +17,19 @@ public class UserInMemoryRepository : IUserRepository
         
         return Task.FromResult(userToGet);
     }
+    
+
+    public Task<User> GetUserAsync(string username)
+    {
+        User? userToGet = _users.SingleOrDefault(u => u.Username == username);
+    
+        if (userToGet is null)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+
+        return Task.FromResult(userToGet);
+    }
 
     public Task<List<User>> GetAllUsersAsync()
     {
@@ -29,6 +42,8 @@ public class UserInMemoryRepository : IUserRepository
         _users.Add(user);
         return Task.FromResult(user);
     }
+
+    
 
     public Task UpdateUserAsync(User user)
     {
@@ -52,8 +67,25 @@ public class UserInMemoryRepository : IUserRepository
         }
         
         _users.Remove(userToDelete);
-        _users.Add(userToDelete);
         return Task.FromResult(user);
+    }
+
+    public Task DeleteUserAsync(string usernameToDelete)
+    {
+        List<User> usersToDelete = _users.Where(p => p.Username == usernameToDelete).ToList();
+        if (usersToDelete.Count == 0)
+        {
+            throw new InvalidOperationException("User not found");
+        }
+        
+        _users.Remove(usersToDelete.First());
+        return Task.FromResult(usersToDelete);
+    }
+
+    public Task DeleteAllUsersAsync()
+    {
+        _users.Clear();
+        return Task.FromResult(0);
     }
 
 

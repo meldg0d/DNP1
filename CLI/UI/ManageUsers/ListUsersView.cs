@@ -6,12 +6,12 @@ namespace CLI.UI.ManageUsers;
 public class ListUsersView
 {
 
-    public void Show(IUserRepository userInMemoryRepository)
+    public async void Show(IUserRepository userInMemoryRepository)
     {
         Console.Clear();
         
-        var userlist = userInMemoryRepository.GetAllUsersAsync().Result;
-        
+         var userlist = userInMemoryRepository.GetAllUsersAsync().Result;
+         
        
         //show list of all users
         userlist.ForEach(u => Console.WriteLine($"{u.Username}:{u.Password}"));
