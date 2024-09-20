@@ -15,4 +15,6 @@ public interface IUserRepository
 
     Task<List<User>> GetAllUsersAsync();
     
+    Task SeedUsersAsync(int count);
+    
 }

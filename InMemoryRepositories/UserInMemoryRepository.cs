@@ -6,6 +6,38 @@ public class UserInMemoryRepository : IUserRepository
 {
     private readonly List<User> _users = new();
     
+    
+    /// <summary>
+    /// This is just for random generation while testing
+    /// </summary>
+    public async Task SeedUsersAsync(int numberOfUsers)
+    {
+        Random random = new Random();
+
+        for (int i = 0; i < numberOfUsers; i++)
+        {
+            // Generate random username and password
+            string username = $"User_{GenerateRandomString(2, random)}";
+            string password = GenerateRandomString(8, random);
+                
+            // Add the user to the repository
+            User user = new User(username, password);
+            await AddUserAsync(user);
+        }
+    }
+
+    // Utility method to generate random strings
+    private static string GenerateRandomString(int length, Random random)
+    {
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
+    }
+    
+    /// <summary>
+    /// Code begins here
+    /// </summary>
+    
     public Task<User> GetUserAsync(int id)
     {
         // Find the user by email using SingleOrDefault, which returns null if no match is found
