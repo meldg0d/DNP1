@@ -38,6 +38,7 @@ public class CliApp
         
         while (true)
         {
+            Console.Clear();
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine();
             Console.WriteLine("*************************************");

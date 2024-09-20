@@ -4,7 +4,7 @@ namespace CLI.UI.ManageUsers;
 
 public class DeleteUsersView
 {
-    public void Show(IUserRepository userInMemoryRepository)
+    public async Task Show(IUserRepository userInMemoryRepository)
     {
         Console.Clear();
         
@@ -35,7 +35,7 @@ public class DeleteUsersView
                 {
                     try
                     {
-                        userInMemoryRepository.DeleteUserAsync(userName).GetAwaiter().GetResult();
+                        await userInMemoryRepository.DeleteUserAsync(userName);
                         Console.WriteLine($"{userName} deleted");
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey();
@@ -63,7 +63,7 @@ public class DeleteUsersView
 
                 if (confirm2 == "YES")
                 {
-                    userInMemoryRepository.DeleteAllUsersAsync().GetAwaiter().GetResult();
+                    await userInMemoryRepository.DeleteAllUsersAsync();
                 }
                 Console.WriteLine("All users deleted");
                 Console.WriteLine("Press any key to continue...");

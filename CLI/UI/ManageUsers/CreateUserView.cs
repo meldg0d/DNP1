@@ -19,7 +19,7 @@ public class CreateUserView
 
         try
         {
-            userInMemoryRepository.AddUserAsync(user).GetAwaiter().GetResult();
+            await userInMemoryRepository.AddUserAsync(user);
             Console.WriteLine("User successfully added!");
             Console.WriteLine($"Username: {username} \nPassword: {password}");
             Console.WriteLine("");
