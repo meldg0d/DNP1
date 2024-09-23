@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLI", "CLI\CLI.csproj", "{B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryContracts", "RepositoryContracts\RepositoryContracts.csproj", "{5F6405AE-FE84-4153-B211-E62F00F95FFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileRepositories", "FileRepositories\FileRepositories.csproj", "{6B706B45-6412-4354-A9B3-6AF2DBFC902C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{761B5099-8355-4148-B61D-91EFA3C830EC} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
 		{B76116C1-D7E3-420F-9612-2449819F58A4} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
 		{5F6405AE-FE84-4153-B211-E62F00F95FFB} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
+		{6B706B45-6412-4354-A9B3-6AF2DBFC902C} = {ADE9320B-777B-488F-A8E6-61576BB991CE}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{52D5DBC7-75B8-441C-B4D4-B74296F0F432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{5F6405AE-FE84-4153-B211-E62F00F95FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F6405AE-FE84-4153-B211-E62F00F95FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F6405AE-FE84-4153-B211-E62F00F95FFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B706B45-6412-4354-A9B3-6AF2DBFC902C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B706B45-6412-4354-A9B3-6AF2DBFC902C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B706B45-6412-4354-A9B3-6AF2DBFC902C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B706B45-6412-4354-A9B3-6AF2DBFC902C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

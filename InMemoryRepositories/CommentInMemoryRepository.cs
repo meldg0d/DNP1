@@ -13,6 +13,11 @@ public class CommentInMemoryRepository : ICommentRepository
         return Task.FromResult(_comments);
     }
 
+    public IQueryable<Comment> GetManyAsync()
+    {
+        throw new NotImplementedException();
+    }
+
     public IQueryable<Comment> GetCommentsQuery()
     {
         return _comments.AsQueryable();

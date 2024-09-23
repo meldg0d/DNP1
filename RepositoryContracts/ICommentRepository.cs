@@ -3,6 +3,7 @@
 public interface ICommentRepository
 {
     Task<List<Comment>> GetAllCommentsAsync();
+    IQueryable<Comment> GetManyAsync();
     
     IQueryable<Comment> GetCommentsQuery();
     
