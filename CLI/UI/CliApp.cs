@@ -23,13 +23,6 @@ public class CliApp
         // Simulate connection to some server
         await Task.Delay(1000);
         
-        // Seed the repository with random users (e.g., 10 users)
-        await _userRepository.SeedUsersAsync(10);
-
-        // Now proceed with the rest of your application logic
-        Console.WriteLine("Random users have been added to the system!");
-        
-        
         
         Console.WriteLine("App started");
         
@@ -38,7 +31,7 @@ public class CliApp
         
         while (true)
         {
-            Console.Clear();
+            
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine();
             Console.WriteLine("*************************************");

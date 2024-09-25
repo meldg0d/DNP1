@@ -1,16 +1,18 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using CLI.UI;
+using FileRepositories;
 using GithubTest;
-using InMemoryRepositories;
 
 try
 {
     Console.WriteLine("Starting...");
         
-    IUserRepository userRepository = new UserInMemoryRepository();
-    ICommentRepository commentRepository = new CommentInMemoryRepository();
-    IPostRepository postRepository = new PostInMemoryRepository();
+    IUserRepository userRepository = new UserFileRepository(); //OLD InMemoryRepository
+    ICommentRepository commentRepository = new CommentFileRepository(); //OLD InMemoryRepository
+    IPostRepository postRepository = new PostFileRepository(); //OLD InMemoryRepository
+    
+    
         
     var cliApp = new CliApp(userRepository, commentRepository, postRepository);
         

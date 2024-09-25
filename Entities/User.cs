@@ -2,12 +2,17 @@
 
 public class User
 {
+    
+    
+    
     public User(string username, string password)
     {
-        int id = new Random().Next();
+        Id = 0;
         Username = username;
         Password = password;
     }
+    
+    public User() { }
 
     public User(int id, string username, string password)
     {
