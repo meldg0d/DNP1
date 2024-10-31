@@ -7,6 +7,9 @@ public class Post
     public string Body { get; set; }
     public int UserId { get; set; }
 
+    
+    public Post(){}
+    
     public Post(int id, string title, string body, int userId)
     {
         Id = id;

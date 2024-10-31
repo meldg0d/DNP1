@@ -1,63 +1,109 @@
-using GithubTest;
+using GithubTest;           // Namespace where your Post entity is defined
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using ApiContracts;
 
-namespace WebAPI.Controllers;
-
-
-[ApiController]
-[Route("[api/posts]")]
-public class PostsController : ControllerBase
+namespace WebAPI.Controllers
 {
-    private static List<Post> posts = new List<Post>();
-
-    [HttpGet]
-    public IActionResult GetAll()
+    [ApiController]
+    [Route("api/posts")]
+    public class PostsController : ControllerBase
     {
-        return Ok(posts);
-    }
+        private static List<Post> posts = new List<Post>();
+        private static int nextId = 1;  // To assign unique IDs to posts
 
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id)
-    {
-        var post = posts.Find(p => p.Id == id);
-        if (post == null)
+        [HttpGet]
+        public IActionResult GetAll()
         {
-            return NotFound();
+            var postDtos = posts.Select(p => new PostReadDTO
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Body = p.Body
+            }).ToList();
+
+            return Ok(postDtos);
         }
 
-        return Ok(post);
-    }
-    
-    [HttpPost]
-    public IActionResult Create([FromBody] Post post)
-    {
-        posts.Add(post);
-        return CreatedAtAction(nameof(GetById), new { id = post.Id }, post);
-    }
-
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Post post)
-    {
-        var existingPost = posts.Find(p => p.Id == id);
-        if (existingPost == null)
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id)
         {
-            return NotFound();
-        }
-        existingPost.Title = post.Title;
-        existingPost.Body = post.Body;
-        return NoContent();
-    }
+            var post = posts.Find(p => p.Id == id);
+            if (post == null)
+            {
+                return NotFound();
+            }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var post = posts.Find(p => p.Id == id);
-        if (post == null)
-        {
-            return NotFound();
+            var postDto = new PostReadDTO
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Body = post.Body
+            };
+
+            return Ok(postDto);
         }
-        posts.Remove(post);
-        return NoContent();
+
+        [HttpPost]
+        public IActionResult Create([FromBody] PostCreateDTO postCreateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var post = new Post
+            {
+                Id = nextId++,
+                Title = postCreateDto.Title,
+                Body = postCreateDto.Body
+            };
+
+            posts.Add(post);
+
+            var postReadDto = new PostReadDTO
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Body = post.Body
+            };
+
+            return CreatedAtAction(nameof(GetById), new { id = post.Id }, postReadDto);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] PostUpdateDTO postUpdateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var existingPost = posts.Find(p => p.Id == id);
+            if (existingPost == null)
+            {
+                return NotFound();
+            }
+
+            existingPost.Title = postUpdateDto.Title;
+            existingPost.Body = postUpdateDto.Body;
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var post = posts.Find(p => p.Id == id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            posts.Remove(post);
+
+            return NoContent();
+        }
     }
 }
-    
