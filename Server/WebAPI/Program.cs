@@ -1,5 +1,6 @@
 using FileRepositories;
 using GithubTest;
+using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IPostRepository, PostFileRepository>();
 builder.Services.AddScoped<IUserRepository, UserFileRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentFileRepository>();
+// add in memory database for now
+builder.Services.AddEntityFrameworkInMemoryDatabase();
 
 var app = builder.Build();
 

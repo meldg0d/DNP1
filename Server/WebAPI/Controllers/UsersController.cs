@@ -1,6 +1,6 @@
-using GithubTest;         
+using GithubTest;
 using Microsoft.AspNetCore.Mvc;
-using ApiContracts; 
+using ApiContracts;
 
 namespace WebAPI.Controllers
 {
@@ -12,105 +12,139 @@ namespace WebAPI.Controllers
         private static int nextId = 1;
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var userDtos = users.Select(u => new UserReadDTO
+            try
             {
-                Id = u.Id,
-                Username = u.Username
-                // Do not include Password
-            }).ToList();
+                var userDtos = await Task.Run(() =>
+                    users.Select(u => new UserReadDTO
+                    {
+                        Id = u.Id,
+                        Username = u.Username
+                    }).ToList()
+                );
 
-            return Ok(userDtos);
+                return Ok(userDtos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var user = users.Find(u => u.Id == id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await Task.Run(() => users.Find(u => u.Id == id));
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                var userDto = new UserReadDTO
+                {
+                    Id = user.Id,
+                    Username = user.Username
+                };
+
+                return Ok(userDto);
             }
-
-            var userDto = new UserReadDTO
+            catch (Exception ex)
             {
-                Id = user.Id,
-                Username = user.Username
-                // Do not include Password
-            };
-
-            return Ok(userDto);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] UserCreateDTO userCreateDto)
+        public async Task<IActionResult> Create([FromBody] UserCreateDTO userCreateDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var user = new User
+                {
+                    Id = nextId++,
+                    Username = userCreateDto.Username,
+                    Password = HashPassword(userCreateDto.Password)
+                };
+
+                await Task.Run(() => users.Add(user));
+
+                var userReadDto = new UserReadDTO
+                {
+                    Id = user.Id,
+                    Username = user.Username
+                };
+
+                return CreatedAtAction(nameof(GetById), new { id = user.Id }, userReadDto);
             }
-
-            var user = new User
+            catch (Exception ex)
             {
-                Id = nextId++,
-                Username = userCreateDto.Username,
-                Password = HashPassword(userCreateDto.Password)
-            };
-
-            users.Add(user);
-
-            var userReadDto = new UserReadDTO
-            {
-                Id = user.Id,
-                Username = user.Username
-            };
-
-            return CreatedAtAction(nameof(GetById), new { id = user.Id }, userReadDto);
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UserUpdateDTO userUpdateDto)
+        public async Task<IActionResult> Update(int id, [FromBody] UserUpdateDTO userUpdateDto)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            var existingUser = users.Find(u => u.Id == id);
-            if (existingUser == null)
+                var existingUser = await Task.Run(() => users.Find(u => u.Id == id));
+                if (existingUser == null)
+                {
+                    return NotFound();
+                }
+
+                if (!string.IsNullOrEmpty(userUpdateDto.Username))
+                {
+                    existingUser.Username = userUpdateDto.Username;
+                }
+
+                if (!string.IsNullOrEmpty(userUpdateDto.Password))
+                {
+                    existingUser.Password = HashPassword(userUpdateDto.Password);
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-
-            if (!string.IsNullOrEmpty(userUpdateDto.Username))
-            {
-                existingUser.Username = userUpdateDto.Username;
-            }
-
-            if (!string.IsNullOrEmpty(userUpdateDto.Password))
-            {
-                existingUser.Password = HashPassword(userUpdateDto.Password);
-            }
-
-            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var user = users.Find(u => u.Id == id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await Task.Run(() => users.Find(u => u.Id == id));
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                await Task.Run(() => users.Remove(user));
+
+                return NoContent();
             }
-
-            users.Remove(user);
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
-        
-        
+
         private string HashPassword(string password)
         {
             // Implement a secure hashing algorithm

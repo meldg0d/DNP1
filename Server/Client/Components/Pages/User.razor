@@ -1,0 +1,72 @@
+﻿@page "/user"
+@using ApiContracts
+@using Client.Services
+@rendermode InteractiveServer
+@inject IUserService userService
+@using GithubTest
+
+<PageTitle>User</PageTitle>
+
+<h1>Users:</h1>
+
+@if (users == null)
+{
+<p>Loading...</p>
+}
+else
+{
+    @foreach (var user in users)
+    {
+        <p>ID:@user.Id    USERNAME:@user.Username    PASSWORD:@user.Password</p>
+    }
+}
+
+<form>
+    <input type="text" placeholder="Username" @bind="newuser.Username">
+    <input type="text" placeholder="Password" @bind="newuser.Password">
+    <button type="button" class="btn btn-primary" @onclick="CreateUser">Create</button>
+</form>
+
+
+@code {
+    private List<GithubTest.User> users;
+    
+    private NewUserModel newuser = new NewUserModel();
+    public class NewUserModel
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        users = await userService.GetUsersAsync();
+    }
+    
+    //crate user
+    private async Task CreateUser()
+    {
+        
+        try
+        {
+            var userdto =  new UserCreateDTO
+            {
+                Username = newuser.Username,
+                Password = newuser.Password
+            };
+            await userService.AddUserAsync(userdto);
+
+            await userService.GetUsersAsync();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+
+
+    }
+
+
+}

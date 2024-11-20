@@ -7,7 +7,6 @@ public class User
     
     public User(string username, string password)
     {
-        Id = 0;
         Username = username;
         Password = password;
     }
