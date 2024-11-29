@@ -1,0 +1,51 @@
+﻿@page "/comments"
+@using System.Security.Claims
+@using ApiContracts.DTOs.CommentDTOs
+@using BlazorApp.Services.CommentService
+@inject ICommentService _commentService
+
+<PageTitle>Add Comment</PageTitle>
+
+
+<EditForm Model="@newComment" OnValidSubmit="HandleValidSubmit">
+    <div class="m-2">
+        <label>Body:</label>
+        <InputTextArea @bind-Value="newComment.Body"/>
+    </div>
+    <div class="m-2">
+        <label>PostId:</label>
+        <InputNumber @bind-Value="newComment.PostID"/>
+    </div>
+
+    <button type="submit">Submit comment</button>
+</EditForm>
+
+
+@code
+{
+    private ResponseComment newComment = new ResponseComment();
+    private int userId;
+    [CascadingParameter] public Task<AuthenticationState> State { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authenticationState = await State;
+        ClaimsPrincipal claimsPrincipal = authenticationState.User;
+        if(claimsPrincipal.Identity is null || !claimsPrincipal.Identity.IsAuthenticated)
+        {
+            return;
+        }
+        IEnumerable<Claim> claims = claimsPrincipal.Claims;
+        string userIdAsString = claims.Single(c => c.Type == "Id").Value;
+        userId = int.Parse(userIdAsString);
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await _commentService.AddAsync(newComment, userId);
+
+        newComment = new ResponseComment();
+    }
+}
+
+

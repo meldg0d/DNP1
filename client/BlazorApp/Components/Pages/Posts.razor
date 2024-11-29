@@ -1,0 +1,62 @@
+﻿@page "/Posts"
+@using ApiContracts.DTOs.PostDTOs
+@using BlazorApp.Services.PostService
+@inject IPostService _PostService
+
+<PageTitle>Posts</PageTitle>
+
+<EditForm Model="@_newPost" OnValidSubmit="HandleValidSubmit">
+    <div class="m-2">
+        <label>Title:</label>
+        <InputText @bind-Value="_newPost.Title"/>
+    </div>
+    <div class="m-2">
+        <label>Body:</label>
+        <InputTextArea @bind-Value="_newPost.Body"/>
+    </div>
+
+    <button type="submit">Create Post</button>
+</EditForm>
+
+<hr/>
+<h2>All Posts</h2>
+
+@if (_posts.Count == 0)
+{
+    <h3>No posts</h3>
+}
+
+<ul>
+    @foreach (var element in _posts)
+    {
+        <li>
+
+            <h4>Title:<br/><a href="/SinglePost/@element.Id" target="_blank">@element.Title</a></h4>
+
+            <p>UserId:<br/>@element.UserId</p>
+
+        </li>
+    }   
+</ul>
+
+
+@code
+{
+    private RequestPost _newPost = new RequestPost();
+
+    private List<ResponsePost> _posts = new List<ResponsePost>();
+
+    private async Task HandleValidSubmit()
+    {
+        await _PostService.AddAsync(_newPost);
+
+        _newPost = new RequestPost();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _posts = (List<ResponsePost>)await _PostService.GetManyAsync();
+    }
+}
+
+}
