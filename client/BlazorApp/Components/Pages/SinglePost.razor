@@ -1,0 +1,52 @@
+﻿@page "/SinglePost/{id}"
+@using ApiContracts.DTOs.CommentDTOs
+@using ApiContracts.DTOs.PostDTOs
+@using BlazorApp.Services.CommentService
+@using BlazorApp.Services.PostService
+@inject IPostService _PostService
+@inject ICommentService _CommentService
+<PageTitle>SinglePost for </PageTitle>
+
+
+<h3>Post Details</h3>
+
+@if (post != null)
+{
+    <h5>Title:<br/>@post.Title</h5>
+    <p>Body:<br/>@post.Body</p>
+    <p>Id:<br/>@post.Id</p>
+    <p>Written by UserId:<br/>@post.UserId</p>
+
+    <p>Comments:</p>
+
+    @foreach (var element in _commentsList)
+    {
+        <span>Comment: <br/>@element.Body <br/></span>
+        <span>Posted by: <br/>@element.UserID <br/> </span>
+    }
+}
+else
+{
+    <p>Loading...</p>
+}
+
+
+@code
+{
+    [Parameter] public string id { get; set; }
+    private ResponsePost post;
+    private List<ResponseComment> _comments = new List<ResponseComment>();
+    List<ResponseComment> _commentsList = new List<ResponseComment>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        post = await _PostService.GetSingleAsync(int.Parse(id));
+
+        _comments = (List<ResponseComment>)await _CommentService.GetManyAsync();
+        
+        _commentsList = _comments.Where(comment => comment.PostID == int.Parse(id)).ToList();
+     
+    }
+
+
+}

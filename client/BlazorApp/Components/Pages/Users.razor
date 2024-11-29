@@ -1,0 +1,39 @@
+﻿@page "/Users"
+@using ApiContracts.DTOs.UserDTOs
+@using BlazorApp.Services.UserService
+@inject IUserService _UserService
+
+<PageTitle>Users</PageTitle>
+
+
+
+
+<EditForm Model="@_newUser" OnValidSubmit="HandleValidSubmit">
+    <div class="m-2">
+        <label>Username:</label>
+        <InputText @bind-Value="_newUser.Username"/>
+    </div>
+    <div class="m-2">
+        <label>Password:</label>
+        <InputText @bind-Value="_newUser.Password" type="password"/>
+    </div>
+
+    <button type="submit">Create User</button>
+
+
+</EditForm>
+
+@code
+{
+    private UserRequest _newUser = new UserRequest();
+
+    private async Task HandleValidSubmit()
+    {
+        await _UserService.AddAsync(_newUser);
+
+        _newUser = new UserRequest();
+        
+    }
+
+
+}
